@@ -1,6 +1,6 @@
 export type FileType = {
   id: string,
-  fileName: string,
+  filename: string,
   fullName: string,
   timestamp: Date,
   downloadURL: string,

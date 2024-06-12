@@ -18,6 +18,7 @@ import {
 import { PencilIcon, TrashIcon } from "lucide-react"
 import { FileType } from "@/typings"
 import { Button } from "../ui/button"
+import { useAppStore } from "@/store/store"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -34,13 +35,25 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const [
+    setIsDeleteModalOpen,
+    setFileId,
+    setFilename,
+    setIsRenameModalOpen,
+  ] = useAppStore(state => [
+    state.setIsDeleteModalOpen,
+    state.setFileId,
+    state.setFilename,
+    state.setIsRenameModalOpen,
+  ]);
+
   const openDeleteModal = (fileId: string) => {
     setFileId(fileId);
     setIsDeleteModalOpen(true);
   }
-  const openRenameModal = (fileId: string) => {
+  const openRenameModal = (fileId: string, filename: string) => {
     setFileId(fileId);
-    setFileName(filename);
+    setFilename(filename);
     setIsRenameModalOpen(true);
   }
 

@@ -30,7 +30,7 @@ function Dropzone() {
     setLoading(true);
     const docRef = await addDoc(collection(db, "users", user.id, "files"), {
       userId: user.id,
-      fileName: selectedFile.name,
+      filename: selectedFile.name,
       fullName: user.fullName,
       profileImg: user.imageUrl,
       timestamp: serverTimestamp(),
