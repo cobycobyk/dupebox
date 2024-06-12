@@ -13,9 +13,12 @@ import { useAppStore } from "@/store/store";
 import { useUser } from "@clerk/nextjs";
 import { deleteDoc, doc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
+import { useToast } from "@/components/ui/use-toast";
+
 
 export function DeleteModal() {
   const { user } = useUser();
+  const { toast } = useToast();
   const [isDeleteModalOpen, setIsDeleteModalOpen, fileId, setFileId] = useAppStore((state) => [
     state.isDeleteModalOpen,
     state.setIsDeleteModalOpen,
@@ -33,6 +36,11 @@ export function DeleteModal() {
           console.log("deleted!")
         });
       }).finally(() => {
+        toast({
+          title: "Success",
+          description: "Successfully deleted file",
+          variant: "destructive",
+        })
         setIsDeleteModalOpen(false);
       })
     } catch (err) {

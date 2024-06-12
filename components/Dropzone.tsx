@@ -7,10 +7,13 @@ import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/fi
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useState } from "react";
 import DropzoneComponent from "react-dropzone";
+import { useToast } from "@/components/ui/use-toast";
+
 
 function Dropzone() {
   const [loading, setLoading] = useState(false);
   const { isLoaded, isSignedIn, user } = useUser();
+  const { toast } = useToast();
 
   const onDrop = (acceptedFiles: File[]) => {
     acceptedFiles.forEach(file => {
@@ -44,6 +47,11 @@ function Dropzone() {
       const downloadURL = await getDownloadURL(imageRef);
       await updateDoc(doc(db, "users", user.id, "files", docRef.id), {
         downloadURL: downloadURL,
+      }).then(() => {
+        toast({
+          title: "Success",
+          description: "Upload Successfull"
+        })
       });
     });
 
